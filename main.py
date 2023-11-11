@@ -1,38 +1,30 @@
-while True:
-
-    def criarPilha():
+def criarPilha():
         #retorna a pilha criada.
         pilha = []
         return pilha
     
     
-    def ver_vazia(pilha):
+def ver_vazia(pilha):
         #verifica se a pilha esta vazia e retorna um valor booleano.
         return len(pilha) == 0
-    
-    def empilhar(pilha, item):
+
+def empilhar(pilha, item):
         #adicona um item na pilha e exibe mensagem de confirmação.
         pilha.append(item)
+    
 
-
-    def desempilhar (pilha):
+def desempilhar (pilha):
         #remove elemento do top da pilha
         if (ver_vazia(pilha)):
             return "Pilha vazia"
         
         return pilha.pop()
-    
-    def verificar_Top(pilha):
+      
 
-        if ver_vazia(pilha):
+pilha_refazer = criarPilha()
+pilha_desfazer = criarPilha()
 
-            return "Pilha vazia"
-        
-        return pilha[-1]    
-
-    pilha_refazer = criarPilha()
-    pilha_desfazer = criarPilha()
-    
+while True:
 
     print("1 - Abrir o arquivo")
     print("0 - Sair")
@@ -47,6 +39,7 @@ while True:
 
     elif op == 1:
 
+        
         nomearq = input("Entre com o nome do arquivo e extensão:")
 
         with open(nomearq, 'r', encoding='utf-8') as arquivo:
@@ -62,6 +55,7 @@ while True:
             print("6 - Refazer")
             print("0 - Sair")
 
+
             op = int(input(">>"))
 
             if op == 0:
@@ -75,9 +69,9 @@ while True:
                 with open(nomearq, 'a', encoding="utf-8") as arquivo:
                     arquivo.write(' ' + texto)
                 
-                comando = "1" + " " + str(texto)
+                empilhar_elemento = "1" + " " + str(texto)
 
-                empilhar(pilha_desfazer, comando)
+                empilhar(pilha_desfazer, empilhar_elemento)
                 
                 
 
@@ -94,9 +88,9 @@ while True:
                 with open(nomearq, 'w', encoding='utf-8') as arquivo:
                     arquivo.write(texto)
 
-                comando = "2" + " " + str(palavra) + " " +  str(sub)
+                empilhar_elemento = "2" + " " + str(palavra) + " " +  str(sub)
                               
-                empilhar(pilha_desfazer, comando)
+                empilhar(pilha_desfazer, empilhar_elemento)
                 
                     
             elif op == 3:
@@ -110,7 +104,8 @@ while True:
                 with open(nomearq, "w", encoding='utf-8') as arquivo:
                     arquivo.write(texto)
 
-                comando = "3" + " " + str(palavra)
+                empilhar_elemento = "3" + " " + str(palavra)
+                empilhar(pilha_desfazer, empilhar_elemento)
 
             elif op == 4:
 
@@ -119,7 +114,9 @@ while True:
 
             elif op == 5: #Desfazer
 
-                comando = verificar_Top(pilha_desfazer).split()
+                comando = pilha_desfazer[-1]
+                comando = comando.split()
+
                 print (comando)
 
                 if comando[0] == "1":
@@ -137,14 +134,12 @@ while True:
 
                     comando[0] = 3
 
-                    elemento_empilhar = str(comando[0]) ," " , str(comando[1])
+                    elemento_empilhar = str(comando[0]) + " " + str(comando[1])
 
                     empilhar(pilha_refazer,elemento_empilhar)
                     desempilhar(pilha_desfazer)
 
                 elif comando[0] == "2":
-
-                    comando = verificar_Top(pilha_desfazer).split()
 
                     with open(nomearq, 'r', encoding="utf-8") as arquivo:
                         texto = arquivo.read()
@@ -154,7 +149,7 @@ while True:
                     with open(nomearq, 'w', encoding='utf-8') as arquivo:
                         arquivo.write(texto)
 
-                    elemento_empilhar = str(comando[0]," ",comando[2], " ",comando[1])
+                    elemento_empilhar = str(comando[0]) + " " + str(comando[2]) +  " " + comando[1]
 
                     empilhar(pilha_refazer, elemento_empilhar)
 
@@ -162,25 +157,23 @@ while True:
 
                 elif comando[0] == "3":
 
-                    comando = verificar_Top(pilha_desfazer).split()
-
                     with open(nomearq, 'a', encoding="utf-8") as arquivo:
                         arquivo.write(' ' + comando[1])
 
                     comando[0] = 1
-                    elemento_empilhar = str(comando[0]," ",comando[1])
 
                     empilhar(pilha_refazer,elemento_empilhar)
                     desempilhar(pilha_desfazer)
 
             elif op == 6: #Refazer
 
-                comando = verificar_Top(pilha_refazer).split()
+                comando = pilha_refazer[-1]
+                comando = comando.split()
+
                 print (comando)
 
                 if comando[0] == "1":
 
-                    comando = verificar_Top(pilha_refazer).split()
 
                     with open(nomearq, 'r', encoding="utf-8") as arquivo:
 
@@ -201,7 +194,6 @@ while True:
 
                 elif comando[0] == "2":
 
-                    comando = verificar_Top(pilha_refazer).split()
 
                     with open(nomearq, 'r', encoding="utf-8") as arquivo:
                         texto = arquivo.read()
@@ -211,7 +203,7 @@ while True:
                     with open(nomearq, 'w', encoding='utf-8') as arquivo:
                         arquivo.write(texto)
 
-                    elemento_empilhar = str(comando[0]," ",comando[2], " ",comando[1])
+                    elemento_empilhar = str(comando[0]) + " " + str(comando[2]) +  " " + str(comando[1])
 
                     empilhar(pilha_desfazer, elemento_empilhar)
 
@@ -219,13 +211,12 @@ while True:
 
                 elif comando[0] == "3":
 
-                    comando = verificar_Top(pilha_refazer).split()
 
                     with open(nomearq, 'a', encoding="utf-8") as arquivo:
                         arquivo.write(' ' + comando[1])
 
                     comando[0] = 1
-                    elemento_empilhar = str(comando[0]," ",comando[1])
+                    elemento_empilhar = str(comando[0]) + " " + str(comando[1])
 
                     empilhar(pilha_desfazer,elemento_empilhar)
                     desempilhar(pilha_refazer)
