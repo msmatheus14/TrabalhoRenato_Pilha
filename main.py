@@ -1,44 +1,41 @@
+def criarPilha():
+
+    #retorna a pilha criada.
+    pilha = []
+    return pilha
+
+    
+def ver_vazia(pilha):
+    #verifica se a pilha esta vazia e retorna um valor booleano.
+    return len(pilha) == 0
+    
+def empilhar(pilha, item):
+    #adicona um item na pilha e exibe mensagem de confirmação.
+    pilha.append(item)
+
+def desempilhar (pilha):
+
+    #remove elemento do top da pilha
+    if (ver_vazia(pilha)):
+        return "Pilha vazia"
+    
+    return pilha.pop()
+    
+def verificar_Top(pilha):
+    
+    posi_top = pilha[len(pilha)- 1]
+
+    return posi_top
+
+pilha_desfazer = criarPilha()
+pilha_refazer = criarPilha()
+
 while True:
-
-    def criarPilha():
-        #retorna a pilha criada.
-        pilha = []
-        return pilha
-    
-    
-    def ver_vazia(pilha):
-        #verifica se a pilha esta vazia e retorna um valor booleano.
-        return len(pilha) == 0
-    
-    def empilhar(pilha, item):
-        #adicona um item na pilha e exibe mensagem de confirmação.
-        pilha.append(item)
-
-
-    def desempilhar (pilha):
-        #remove elemento do top da pilha
-        if (ver_vazia(pilha)):
-            return "Pilha vazia"
-        
-        return pilha.pop()
-    
-    def verificar_Top(pilha):
-
-        if ver_vazia(pilha):
-
-            return "Pilha vazia"
-        
-        return pilha[-1]    
-
-    pilha_desfazer = criarPilha()
-    pilha_refazer = criarPilha()
 
     print("1 - Abrir o arquivo")
     print("0 - Sair")
 
     op = int(input())
-
-
 
     if op == 0:
 
@@ -119,9 +116,9 @@ while True:
             elif op == 5: #Desfazer
 
                 comando = verificar_Top(pilha_desfazer).split()
-                print (comando)
 
                 if comando[0] == "1":
+                    
                     print ("oi")
 
                     with open(nomearq, 'r', encoding="utf-8") as arquivo:
@@ -174,11 +171,8 @@ while True:
 
             elif op == 6: #Refazer
 
-                comando = verificar_Top(pilha_refazer).split()
-
                 if comando[0] == "1":
 
-                    comando = verificar_Top(pilha_refazer).split()
 
                     with open(nomearq, 'r', encoding="utf-8") as arquivo:
 
@@ -199,8 +193,6 @@ while True:
 
                 elif comando[0] == "2":
 
-                    comando = verificar_Top(pilha_refazer).split()
-
                     with open(nomearq, 'r', encoding="utf-8") as arquivo:
                         texto = arquivo.read()
 
@@ -217,13 +209,12 @@ while True:
 
                 elif comando[0] == "3":
 
-                    comando = verificar_Top(pilha_refazer).split()
 
                     with open(nomearq, 'a', encoding="utf-8") as arquivo:
                         arquivo.write(' ' + comando[1])
 
                     comando[0] = 1
-                    elemento_empilhar = str(comando[0]," ",comando[1])
+                    elemento_empilhar = str(comando[0]) ," ", str(comando[1]))
 
                     empilhar(pilha_desfazer,elemento_empilhar)
                     desempilhar(pilha_refazer)
