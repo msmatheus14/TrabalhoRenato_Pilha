@@ -109,8 +109,16 @@ while True:
 
             elif op == 4:
 
+                with open(nomearq, 'r', encoding="utf-8") as arquivo:
+                    texto = arquivo.read()
+
+                empilhar_elemento = "4" + " "+ str(texto)
+                empilhar(pilha_desfazer,empilhar_elemento)
+
                 with open(nomearq, 'w', encoding='utf-8') as arquivo:
                     pass  # No need to write anything; the file is cleared
+
+
 
             elif op == 5: #Desfazer
 
@@ -121,10 +129,10 @@ while True:
 
                     comando = pilha_desfazer[-1]
                     comando = comando.split()
+                    print (comando)
 
 
                     if comando[0] == "1":
-                        print ("oi")
 
                         with open(nomearq, 'r', encoding="utf-8") as arquivo:
 
@@ -170,6 +178,17 @@ while True:
 
                         empilhar(pilha_refazer,elemento_empilhar)
                         desempilhar(pilha_desfazer)
+
+                    elif comando[0] == "4":
+                        
+                        for i in range(1,len(comando)):
+
+                            with open(nomearq, 'a', encoding="utf-8") as arquivo:
+                                arquivo.write(' ' + comando[i])
+                        
+                        empilhar(pilha_refazer, pilha_desfazer[-1])
+                        desempilhar(pilha_desfazer)
+
 
             elif op == 6: #Refazer
                 if ver_vazia(pilha_refazer) == True:
@@ -227,3 +246,15 @@ while True:
 
                         empilhar(pilha_desfazer,elemento_empilhar)
                         desempilhar(pilha_refazer)
+
+                    elif comando[0] == "4":
+                        
+                        with open(nomearq, 'r', encoding="utf-8") as arquivo:
+                            texto = arquivo.read()
+
+                        empilhar_elemento = "4" + " "+ str(texto)
+                        empilhar(pilha_desfazer,empilhar_elemento)
+                        desempilhar(pilha_refazer)
+
+                        with open(nomearq, 'w', encoding='utf-8') as arquivo:
+                            pass  # No need to write anything; the file is cleared
