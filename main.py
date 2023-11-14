@@ -1,23 +1,18 @@
 def criarPilha():
-        #retorna a pilha criada.
         pilha = []
         return pilha
     
     
 def ver_vazia(pilha):
-        #verifica se a pilha esta vazia e retorna um valor booleano.
         return len(pilha) == 0
 
 def empilhar(pilha, item):
-        #adicona um item na pilha e exibe mensagem de confirmação.
         pilha.append(item)
     
 
 def desempilhar (pilha):
-        #remove elemento do top da pilha
         if (ver_vazia(pilha)):
             return "Pilha vazia"
-        
         return pilha.pop()
       
 
@@ -116,11 +111,11 @@ while True:
                 empilhar(pilha_desfazer,empilhar_elemento)
 
                 with open(nomearq, 'w', encoding='utf-8') as arquivo:
-                    pass  # No need to write anything; the file is cleared
+                    pass 
 
 
 
-            elif op == 5: #Desfazer
+            elif op == 5: 
 
                 if (ver_vazia(pilha_desfazer)==True):
                     print ("Pilha desfazer vazia!")
@@ -257,4 +252,4 @@ while True:
                         desempilhar(pilha_refazer)
 
                         with open(nomearq, 'w', encoding='utf-8') as arquivo:
-                            pass  # No need to write anything; the file is cleared
+                            pass  
