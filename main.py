@@ -23,9 +23,7 @@ def desempilhar (pilha):
             return "Pilha vazia"
         
         return pilha.pop()
-      
-
-
+    
 
 
 while True:
@@ -102,6 +100,7 @@ while True:
                 
                     
             elif op == 3:
+        
 
                 palavra_removida = input("Digite a palavra que deseja remover:")
 
@@ -110,14 +109,14 @@ while True:
                     texto = arquivo.read()
 
                 texto = texto.split()
+                
+                if palavra_removida in texto:
+                    if texto.index(palavra_removida) > 0:
+                        posi = texto.index(palavra_removida)
+                        anterior = texto[posi-1]
+                    texto.remove(palavra_removida)
 
-                for i in range(0,len(texto)-1):
-                    
-                    if texto[i] == palavra_removida:
-                        if i > 0:
-                            anterior = texto[i - 1]
-
-                texto.remove(palavra_removida)
+                print (anterior)
 
                 texto2 = " ".join(texto)
 
@@ -152,15 +151,15 @@ while True:
 
                     comando = pilha_desfazer[-1]
                     comando = comando.split()
+                    print (comando)
                     
                     if comando[0] == "1":
 
                         with open(nomearq, 'r', encoding="utf-8") as arquivo:
                             texto = arquivo.read()
-
+                        
                         texto = texto.replace(comando[1], "")
 
-                        
                         with open(nomearq, 'w', encoding='utf-8') as arquivo:
                             arquivo.write(texto)
                        
@@ -196,10 +195,9 @@ while True:
 
                             texto = texto.split()
 
-                            for i in range(0,len(texto)-1):
-                                
-                                if texto[i] == comando[1]:
-                                    texto.insert(i+1, comando[2])
+                            posi = texto.index(comando[1])
+
+                            texto.insert(posi+1,comando[2])
 
                             texto = " ".join(texto)
 
@@ -248,6 +246,7 @@ while True:
 
                     comando = pilha_refazer[-1]
                     comando = comando.split()
+                    print (comando)
 
                     if comando[0] == "1":
                         
@@ -285,7 +284,7 @@ while True:
 
                         texto = texto.split()
 
-                        texto.remove(comando[2])
+                        texto.remove(palavra_removida)
 
                         texto2 = " ".join(texto)
 
