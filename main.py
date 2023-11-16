@@ -1,7 +1,5 @@
 #Matheus Andrade e Gabriel Alves
 
-
-
 def criarPilha():
         #retorna a pilha criada.
         pilha = []
@@ -157,8 +155,10 @@ while True:
 
                         with open(nomearq, 'r', encoding="utf-8") as arquivo:
                             texto = arquivo.read()
-                        
-                        texto = texto.replace(comando[1], "")
+
+                        texto = texto.split()
+                        texto.remove(comando[1])
+                        texto = " ".join(texto)
 
                         with open(nomearq, 'w', encoding='utf-8') as arquivo:
                             arquivo.write(texto)
