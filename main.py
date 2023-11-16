@@ -1,23 +1,32 @@
+#Matheus Andrade e Gabriel Alves
+
+
+
 def criarPilha():
+        #retorna a pilha criada.
         pilha = []
         return pilha
     
     
 def ver_vazia(pilha):
+        #verifica se a pilha esta vazia e retorna um valor booleano.
         return len(pilha) == 0
 
 def empilhar(pilha, item):
+        #adicona um item na pilha e exibe mensagem de confirmação.
         pilha.append(item)
-    
+
 
 def desempilhar (pilha):
+        #remove elemento do top da pilha
         if (ver_vazia(pilha)):
             return "Pilha vazia"
+        
         return pilha.pop()
       
 
-pilha_refazer = criarPilha()
-pilha_desfazer = criarPilha()
+
+
 
 while True:
 
@@ -34,6 +43,8 @@ while True:
 
     elif op == 1:
 
+        pilha_refazer = criarPilha()
+        pilha_desfazer = criarPilha()
         
         nomearq = input("Entre com o nome do arquivo e extensão:")
 
@@ -41,6 +52,8 @@ while True:
             print(arquivo.read())
 
         while True:
+
+            anterior = "*"
 
             print("1 - Adicionar texto")
             print("2 - Substituir palavra no texto")
@@ -62,7 +75,7 @@ while True:
                 texto = input(">>")
 
                 with open(nomearq, 'a', encoding="utf-8") as arquivo:
-                    arquivo.write(' ' + texto)
+                    arquivo.write(" " + texto)
                 
                 empilhar_elemento = "1" + " " + str(texto)
 
@@ -90,16 +103,31 @@ while True:
                     
             elif op == 3:
 
-                palavra = input("Digite a palavra que deseja remover:")
+                palavra_removida = input("Digite a palavra que deseja remover:")
+
                 with open(nomearq, 'r', encoding="utf-8") as arquivo:
+
                     texto = arquivo.read()
 
-                texto = texto.replace(palavra, "")
+                texto = texto.split()
+
+                for i in range(0,len(texto)-1):
+                    
+                    if texto[i] == palavra_removida:
+                        if i > 0:
+                            anterior = texto[i - 1]
+
+                texto.remove(palavra_removida)
+
+                texto2 = " ".join(texto)
 
                 with open(nomearq, "w", encoding='utf-8') as arquivo:
-                    arquivo.write(texto)
 
-                empilhar_elemento = "3" + " " + str(palavra)
+                    arquivo.write(texto2)
+                
+
+                empilhar_elemento = "3" + " " + str(anterior) + " " + str(palavra_removida)
+
                 empilhar(pilha_desfazer, empilhar_elemento)
 
             elif op == 4:
@@ -111,11 +139,11 @@ while True:
                 empilhar(pilha_desfazer,empilhar_elemento)
 
                 with open(nomearq, 'w', encoding='utf-8') as arquivo:
-                    pass 
+                    pass  # No need to write anything; the file is cleared
 
 
 
-            elif op == 5: 
+            elif op == 5: #Desfazer
 
                 if (ver_vazia(pilha_desfazer)==True):
                     print ("Pilha desfazer vazia!")
@@ -124,22 +152,18 @@ while True:
 
                     comando = pilha_desfazer[-1]
                     comando = comando.split()
-                    print (comando)
-
-
+                    
                     if comando[0] == "1":
 
                         with open(nomearq, 'r', encoding="utf-8") as arquivo:
-
                             texto = arquivo.read()
 
-                            texto = texto.replace(comando[1], "")
+                        texto = texto.replace(comando[1], "")
 
-                        with open(nomearq, "w", encoding='utf-8') as arquivo:
-
+                        
+                        with open(nomearq, 'w', encoding='utf-8') as arquivo:
                             arquivo.write(texto)
-
-                        comando[0] = 3
+                       
 
                         elemento_empilhar = str(comando[0]) + " " + str(comando[1])
 
@@ -164,12 +188,42 @@ while True:
 
                     elif comando[0] == "3":
 
-                        with open(nomearq, 'a', encoding="utf-8") as arquivo:
-                            arquivo.write(' ' + comando[1])
+                        if comando[1] != "*":
 
-                        comando[0] = 1
+                            with open(nomearq, 'r', encoding="utf-8") as arquivo:
 
-                        elemento_empilhar = str(comando[0]) + str(comando[1])
+                                texto = arquivo.read()
+
+                            texto = texto.split()
+
+                            for i in range(0,len(texto)-1):
+                                
+                                if texto[i] == comando[1]:
+                                    texto.insert(i+1, comando[2])
+
+                            texto = " ".join(texto)
+
+                            with open(nomearq, 'w', encoding="utf-8") as arquivo:
+                                arquivo.write(texto)
+
+
+                        else:
+
+                            with open(nomearq, 'r', encoding="utf-8") as arquivo:
+
+                                texto = arquivo.read()
+
+                            texto = texto.split()
+
+                            texto.insert(0,comando[2])
+
+                            texto = " ".join(texto)
+
+                            with open(nomearq, 'w', encoding="utf-8") as arquivo:
+
+                                arquivo.write(texto)
+
+                        elemento_empilhar = str(comando[0]) + " " + str(comando[1]) + " " + str(comando[2])
 
                         empilhar(pilha_refazer,elemento_empilhar)
                         desempilhar(pilha_desfazer)
@@ -186,6 +240,7 @@ while True:
 
 
             elif op == 6: #Refazer
+
                 if ver_vazia(pilha_refazer) == True:
                     print ("Pilha Refazer Vazia!")
 
@@ -196,19 +251,11 @@ while True:
 
                     if comando[0] == "1":
                         
-                        with open(nomearq, 'r', encoding="utf-8") as arquivo:
+                        with open(nomearq, "a", encoding='utf-8') as arquivo:
 
-                            texto = arquivo.read()
+                            arquivo.write(comando[1] + " ")
 
-                            texto = texto.replace(comando[1], "")
-
-                        with open(nomearq, "w", encoding='utf-8') as arquivo:
-
-                            arquivo.write(texto)
-
-                        comando[0] = 3
-
-                        elemento_empilhar = comando[0]," ",comando[1]
+                        elemento_empilhar = str(comando[0]) + " " + str(comando[1])
 
                         empilhar(pilha_desfazer,elemento_empilhar)
                         desempilhar(pilha_refazer)
@@ -232,14 +279,23 @@ while True:
 
                     elif comando[0] == "3":
 
+                        
+                        with open(nomearq, 'r', encoding="utf-8") as arquivo:
+                            texto = arquivo.read()
 
-                        with open(nomearq, 'a', encoding="utf-8") as arquivo:
-                            arquivo.write(' ' + comando[1])
+                        texto = texto.split()
 
-                        comando[0] = 1
-                        elemento_empilhar = str(comando[0]) + " " + str(comando[1])
+                        texto.remove(comando[2])
+
+                        texto2 = " ".join(texto)
+
+                        with open(nomearq, 'w', encoding="utf-8") as arquivo:
+                            arquivo.write(texto2)
+
+                        elemento_empilhar = str(comando[0]) + " " + str(comando[1]) + " " + str(comando[2])
 
                         empilhar(pilha_desfazer,elemento_empilhar)
+
                         desempilhar(pilha_refazer)
 
                     elif comando[0] == "4":
@@ -252,4 +308,4 @@ while True:
                         desempilhar(pilha_refazer)
 
                         with open(nomearq, 'w', encoding='utf-8') as arquivo:
-                            pass  
+                            pass  # No need to write anything; the file is cleared
