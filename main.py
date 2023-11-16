@@ -109,23 +109,27 @@ while True:
                 texto = texto.split()
                 
                 if palavra_removida in texto:
-                    if texto.index(palavra_removida) > 0:
-                        posi = texto.index(palavra_removida)
-                        anterior = texto[posi-1]
-                    texto.remove(palavra_removida)
 
-                print (anterior)
+                    if palavra_removida in texto:
+                        if texto.index(palavra_removida) > 0:
+                            posi = texto.index(palavra_removida)
+                            anterior = texto[posi-1]
+                        texto.remove(palavra_removida)
 
-                texto2 = " ".join(texto)
+                    print (anterior)
 
-                with open(nomearq, "w", encoding='utf-8') as arquivo:
+                    texto2 = " ".join(texto)
 
-                    arquivo.write(texto2)
-                
+                    with open(nomearq, "w", encoding='utf-8') as arquivo:
 
-                empilhar_elemento = "3" + " " + str(anterior) + " " + str(palavra_removida)
+                        arquivo.write(texto2)
+                    
 
-                empilhar(pilha_desfazer, empilhar_elemento)
+                    empilhar_elemento = "3" + " " + str(anterior) + " " + str(palavra_removida)
+
+                    empilhar(pilha_desfazer, empilhar_elemento)
+                else:
+                    print ("palavra não encotrada no texto>>>\n\n")
 
             elif op == 4:
 
@@ -197,7 +201,10 @@ while True:
 
                             posi = texto.index(comando[1])
 
-                            texto.insert(posi+1,comando[2])
+                            if posi == 0:
+                                texto.append(comando[2])
+                            else:
+                                texto.insert(posi+1,comando[2])
 
                             texto = " ".join(texto)
 
@@ -284,7 +291,7 @@ while True:
 
                         texto = texto.split()
 
-                        texto.remove(palavra_removida)
+                        texto.remove(comando[2])
 
                         texto2 = " ".join(texto)
 
